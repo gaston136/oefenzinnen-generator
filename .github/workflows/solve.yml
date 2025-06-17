@@ -1,0 +1,25 @@
+name: Los wiskunde op
+
+on: [push]
+
+jobs:
+  solve:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Installeer Python en dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sympy
+    - name: Los opgaven op
+      run: python solve_problems.py
+    - name: Commit en push oplossingen
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add solutions.txt
+        git commit -m "Automatisch opgeloste wiskunde problemen"
+        git push
+      env:
+        # Dit token geeft rechten om te pushen namens de Action
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
