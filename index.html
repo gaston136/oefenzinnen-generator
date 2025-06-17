@@ -1,10 +1,97 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>Oefenzinnen Generator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Oefenzinnen Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f7f7f7;
+            color: #333;
+        }
+        input, button {
+            font-size: 1rem;
+            padding: 0.5em;
+            margin: 0.5em 0;
+        }
+        button {
+            cursor: pointer;
+        }
+        pre {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 1em;
+            max-height: 400px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
-  <h1>Welkom op mijn oefenzinnen-website!</h1>
+
+<h1>Oefenzinnen Generator</h1>
+
+<label for="aantal">Hoeveel zinnen wil je genereren? (max 1000)</label><br />
+<input type="number" id="aantal" min="1" max="1000" value="10" /><br />
+<button onclick="genereer()">Genereer</button>
+
+<pre id="resultaat"></pre>
+
+<script>
+const simple = [
+    "De kat slaapt op de bank.",
+    "Hij eet een appel.",
+    "Zij loopt naar school.",
+    "De hond blaft.",
+    "Ik drink water."
+];
+
+const compoundNev = [
+    "Ik lees een boek en ik luister naar muziek.",
+    "We gaan naar de winkel, maar het is druk.",
+    "Hij werkt hard en hij spaart geld.",
+    "Ze danst en zingt op het feest.",
+    "De man lacht en hij praat hard."
+];
+
+const compoundOnd = [
+    "Omdat het regent, neem ik een paraplu mee.",
+    "Ik weet niet of zij komt.",
+    "Terwijl hij sliep, viel de telefoon.",
+    "Hij zegt dat hij morgen komt.",
+    "Ze lacht omdat ze blij is."
+];
+
+function genereer() {
+    const aantal = parseInt(document.getElementById("aantal").value);
+    if(isNaN(aantal) || aantal < 1 || aantal > 1000) {
+        alert("Voer een geldig aantal in tussen 1 en 1000.");
+        return;
+    }
+
+    let output = "";
+    for(let i = 1; i <= aantal; i++) {
+        let r = Math.random();
+        let zin;
+        let label;
+        if(r < 0.4) {
+            zin = simple[Math.floor(Math.random() * simple.length)];
+            label = "enk.";
+        } else if(r < 0.7) {
+            zin = compoundNev[Math.floor(Math.random() * compoundNev.length)];
+            label = "sam. nev.";
+        } else {
+            zin = compoundOnd[Math.floor(Math.random() * compoundOnd.length)];
+            label = "sam. ond.";
+        }
+        output += `${i}. ${zin}  [${label}]\n`;
+    }
+    document.getElementById("resultaat").textContent = output;
+}
+</script>
+
 </body>
 </html>
